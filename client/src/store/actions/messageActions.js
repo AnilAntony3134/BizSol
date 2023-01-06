@@ -23,7 +23,7 @@ export const getMessages = () => async (dispatch, getState) => {
   });
   try {
     const options = attachTokenToHeaders(getState);
-    const response = await axios.get('/api/messages', options);
+    const response = await axios.get('https://localhost:80/api/messages', options);
 
     dispatch({
       type: GET_MESSAGES_SUCCESS,

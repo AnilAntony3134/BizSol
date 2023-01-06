@@ -8,6 +8,7 @@ router.get('/', async (req, res) => {
   try {
     const messages = await Message.find().sort({ createdAt: 'desc' }).populate('user');
 
+    console.log(messages)
     res.json({
       messages: messages.map((m) => {
         return m.toJSON();

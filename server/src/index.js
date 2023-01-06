@@ -35,11 +35,28 @@ mongoose
     useUnifiedTopology: true,
     useFindAndModify: false,
   })
-  .then(() => {
-    console.log('MongoDB Connected...');
-    seedDb();
-  })
+  // .then(() => {
+  //   console.log('MongoDB Connected...');
+  //   // seedDb();
+  // })
   .catch((err) => console.log(err));
+
+
+// cors
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With ,Content-Type,Authorization ,Accept",
+    "HTTP/1.1 200 OK",
+    "append,delete,entries,foreach,get,has,keys,set,values,Authorization"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET,POST,PATCH,DELETE,OPTIONS,PUT"
+  );
+  next();
+});
 
 // Use Routes
 app.use('/', routes);
