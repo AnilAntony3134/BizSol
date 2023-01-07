@@ -7,8 +7,6 @@ const router = Router();
 router.get('/', async (req, res) => {
   try {
     const messages = await Message.find().sort({ createdAt: 'desc' }).populate('user');
-
-    console.log(messages)
     res.json({
       messages: messages.map((m) => {
         return m.toJSON();
@@ -32,10 +30,11 @@ router.get('/:id', async (req, res) => {
 router.post('/', requireJwtAuth, async (req, res) => {
   const { error } = validateMessage(req.body);
   if (error) return res.status(400).json({ message: error.details[0].message });
-
   try {
     let message = await Message.create({
       text: req.body.text,
+      incentive: req.body.incentive,
+      category: req.body.category,
       user: req.user.id,
     });
     message = await message.populate('user').execPopulate();
@@ -71,7 +70,7 @@ router.put('/:id', requireJwtAuth, async (req, res) => {
 
     let message = await Message.findByIdAndUpdate(
       req.params.id,
-      { text: req.body.text, user: tempMessage.user.id },
+      { text: req.body.text, incentive: req.body.incentive, user: tempMessage.user.id, category: req.body.category },
       { new: true },
     );
     if (!message) return res.status(404).json({ message: 'No message found.' });

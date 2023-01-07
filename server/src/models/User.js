@@ -100,6 +100,7 @@ userSchema.methods.toJSON = function () {
     role: this.role,
     createdAt: this.createdAt,
     updatedAt: this.updatedAt,
+    organisation: this.organisation
   };
 };
 

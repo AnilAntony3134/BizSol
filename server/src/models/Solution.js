@@ -8,7 +8,7 @@ const solutionSchema = new Schema(
       type: String,
       required: true,
     },
-    problem: {
+    message: {
         type: mongoose.Schema.Types.ObjectId, ref: 'Message',
         required: true,
     },
@@ -19,10 +19,11 @@ const solutionSchema = new Schema(
 )
 
 solutionSchema.methods.toJSON = function () {
+  console.log(this)
   return {
     id: this._id,
     solution: this.solution,
-    problem: this.problem,
+    message: this.message.toJSON(),
     organisation: this.organisation.toJSON(),
     createdAt: this.createdAt,
     updatedAt: this.updatedAt,
@@ -33,7 +34,7 @@ solutionSchema.methods.toJSON = function () {
 export const validateMessage = (message) => {
   const schema = {
     solution: Joi.string().min(5).max(800).required(),
-    problem: Joi.string().required(),
+    message: Joi.string().required(),
     organisation: Joi.string().required(),
   };
   return Joi.validate(message, schema);

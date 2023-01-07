@@ -25,12 +25,12 @@
 .submitbtn{
   background-color: var(--main);
   border: none;
-  padding: 10px;
+  padding: 16px;
   width: 100%;
   color: white;
   border-radius: 10px;
   font-size: 16px;
-  margin: 10px 0;
+  margin: 25px 0;
   cursor: pointer;
 }
 

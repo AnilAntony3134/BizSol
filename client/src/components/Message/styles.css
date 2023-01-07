@@ -8,8 +8,19 @@
   margin-left: 5px;
 }
 
+.message_card_wrapper{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;  
+}
+
+.MuiAccordionSummary-root{
+  background-color: var(--main);
+}
+
 .message {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid rgb(73, 73, 73);
   padding: 20px 0;
 }
 .message:last-child {

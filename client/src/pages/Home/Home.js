@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -28,6 +28,7 @@ const Home = ({ auth, reseedDatabase }) => {
   const handleReseed = () => {
     reseedDatabase();
   };
+  const [isaddMessage, setIsAddMessage] = useState(false);
 
   return (
     <Layout>
@@ -39,11 +40,19 @@ const Home = ({ auth, reseedDatabase }) => {
         ) : (
           <>
             <>
-              <h1>Home page</h1>
+            <div style={{display: 'flex', justifyContent: 'space-between'}}>
+              <h1>DashBoard</h1>
+              <button className='submitbtn' style={{width: '200px'}} onClick={()=> setIsAddMessage(!isaddMessage)}>{isaddMessage ? 'Hide Write Message' : 'New Issue'}</button>
+            </div>
+
               Welcome <span className="name">{auth.me.name}</span>!
             </>
-            <ReseedMessage handleReseed={handleReseed} />
-            <MessageForm />
+            {/* <ReseedMessage handleReseed={handleReseed} /> */}
+            {
+              isaddMessage && (
+                <MessageForm setAddMessage = {setIsAddMessage}/>
+              )
+            }
             <MessageList />
           </>
         )}

@@ -1,3 +1,11 @@
 .message-form .btn {
   width: auto;
 }
+
+.custom-select{
+  position: relative;
+}
+
+.custom-select select{
+  appearance: none; 
+}

@@ -81,6 +81,6 @@ button[disabled] {
 /* } */
 
 .loader {
-  background-color: #0f0;
+  background-color: rgb(8, 8, 8);
   color: black;
 }

@@ -1,8 +1,12 @@
 .home-page .reseed-btn {
-  width: auto;
+  width: 80%;
 }
 
 .home-page .name {
   font-size: 20px;
   font-weight: bold;
+}
+
+.home-page{
+  width: 100%;
 }

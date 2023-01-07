@@ -23,11 +23,13 @@ export const loadMe = () => async (dispatch, getState) => {
   try {
     const options = attachTokenToHeaders(getState);
     const response = await axios.get('https://localhost:80/api/users/me', options);
+    console.log(response);
     dispatch({
       type: ME_SUCCESS,
       payload: { me: response.data.me },
     });
   } catch (err) {
+    console.log(err);
     dispatch({
       type: ME_FAIL,
       payload: { error: err.response.data.message },

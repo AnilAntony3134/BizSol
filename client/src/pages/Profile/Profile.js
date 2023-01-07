@@ -121,6 +121,10 @@ const Profile = ({
                 <span className="info">{profile.role}</span>
               </div>
               <div>
+                <span className="label">{me.organisation?.flag ? 'Organisation Name': 'Name'} </span>
+                <span className="info">{profile.name}</span>
+              </div>
+              <div>
                 <span className="label">Name: </span>
                 <span className="info">{profile.name}</span>
               </div>

@@ -54,7 +54,7 @@ const Login = ({ auth, history, loginUserWithEmail }) => {
           {/* <p className="logins">Admin: email0@email.com 123456789</p> */}
           {/* <p className="logins">User: email1@email.com 123456789</p> */}
           <div>
-          <p className="logins">Name</p>
+          <p className="logins">Email</p>
             <input
               placeholder="Email address"
               name="email"

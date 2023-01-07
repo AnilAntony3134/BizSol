@@ -3,14 +3,18 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { useFormik } from 'formik';
+import { Modal } from '@material-ui/core';
 
 import { deleteMessage, editMessage, clearMessageError } from '../../store/actions/messageActions';
 import { messageFormSchema } from './validation';
 
 import './styles.css';
+import Solution from '../Solutions/Solution';
+import MessageList from '../MessageList/MessageList';
 
 const Message = ({ message, auth, deleteMessage, editMessage, clearMessageError }) => {
   const [isEdit, setIsEdit] = useState(false);
+  let [openModal, setOpenModal] = useState(false);
 
   const handleDelete = (e, id) => {
     e.preventDefault();
@@ -22,18 +26,24 @@ const Message = ({ message, auth, deleteMessage, editMessage, clearMessageError 
   const handleClickEdit = (e) => {
     e.preventDefault();
     formik.setFieldValue('text', message.text);
+    formik.setFieldValue('incentive', message.incentive);
+    formik.setFieldValue('category', message.category);
     setIsEdit((oldIsEdit) => !oldIsEdit);
   };
+
+  const handleClose = () => setOpenModal(false)
 
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
       text: '',
       id: message.id,
+      incentive: 0,
+      category: ''
     },
     validationSchema: messageFormSchema,
     onSubmit: (values, { resetForm }) => {
-      editMessage(values.id, { text: values.text });
+      editMessage(values.id, { text: values.text, incentive: values.incentive, category: values.category });
       setIsEdit(false);
       // resetForm();
     },
@@ -51,23 +61,7 @@ const Message = ({ message, auth, deleteMessage, editMessage, clearMessageError 
 
   return (
     <div className={message.isLoading ? 'message loader' : 'message'}>
-      <div className="message-header">
-        <Link to={`/${message.user.username}`}>
-          <img src={message.user.avatar} className="avatar" />
-        </Link>
-        <div>
-          <Link to={`/${message.user.username}`} className="name">
-            {message.user.name}
-          </Link>
-          <span className="username">@{message.user.username}</span>
-          <span className="time text-light">{moment(message.createdAt).fromNow()}</span>
-          {!moment(message.createdAt).isSame(message.updatedAt, 'minute') && (
-            <span className="time text-light">{`Edited: ${moment(
-              message.updatedAt,
-            ).fromNow()}`}</span>
-          )}
-        </div>
-      </div>
+
       <form onSubmit={formik.handleSubmit}>
         {isEdit ? (
           <>
@@ -79,22 +73,85 @@ const Message = ({ message, auth, deleteMessage, editMessage, clearMessageError 
               value={formik.values.text}
               disabled={message.isLoading}
             />
+            <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+              <div>
+                <p>Incentive (₹)</p>
+                <input
+                  type='number'
+                  name="incentive"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.number}
+                  style={{ marginBottom: '25px' }}
+                />
+              </div>
+              <div>
+                <p>category</p>
+                <select
+                  style={{ padding: '10px', width: '200px' }}
+                  name="category"
+                  value={formik.values.category}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                >
+                  <option value="" label="select">Select</option>
+                  <option label="technical" value="technical">Technical</option>
+                  <option label="management" value="management">Management</option>
+                  <option label="writing" value="writing">Writing</option>
+                  <option label="creativethinking" value="creativethinking">Creative thinking</option>
+                  <option label="supplychain" value="supplychain">Supply chain</option>
+                  <option label="resources" value="resources">Resources</option>
+                  <option label="networking" value="networking">Networking</option>
+                  <option label="other" value="other">Other</option>
+                </select>
+              </div>
+            </div>
             <input type="hidden" name="id" />
             {(formik.touched.text && formik.errors.text) || message.error ? (
               <p className="error">{formik.errors.text || message.error}</p>
             ) : null}
+
           </>
         ) : (
-          <p>{message.text}</p>
+          <>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <h2>{message.text.substring(0, 100)}</h2>
+              <p>{message.incentive ? `₹ ${message.incentive}` : 'undisclosed'}</p>
+            </div>
+            <p>{message.category}</p>
+          </>
         )}
+        <div className="message-header">
+          <Link to={`/${message.user.username}`}>
+            {/* <img src={message.user.avatar} className="avatar" /> */}
+          </Link>
+          <div>
+            <Link to={`/${message.user.username}`} className="name" style={{ textDecoration: "none", color: "#4040d4" }}>
+              {message.user.name}
+            </Link>
+            <span className="time text-light">{moment(message.createdAt).fromNow()}</span>
+          </div>
+        </div>
+        {
+          !auth.me.organisation?.flag && (
+            <>
+              <button onClick={() => { setOpenModal(true) }} type="button" className="btn" style={{ backgroundColor: '#4040d4', color: 'white', cursor: 'pointer' }}>
+                Give Solution
+              </button>
+            </>
+          )
+        }
         {auth.isAuthenticated && (auth.me.id === message.user.id || auth.me.role === 'ADMIN') && (
           <>
             {!isEdit ? (
               <>
-                <button onClick={handleClickEdit} type="button" className="btn">
+                <button onClick={handleClickEdit} type="button" className="btn" style={{ backgroundColor: 'green', color: 'white', cursor: 'pointer' }}>
+                  Solutions {message.solutions?.length() ? message.solutions?.length() : 0}
+                </button>
+                <button onClick={handleClickEdit} type="button" className="btn" style={{ backgroundColor: '#4040d4', color: 'white', cursor: 'pointer' }}>
                   Edit
                 </button>
-                <button onClick={(e) => handleDelete(e, message.id)} type="button" className="btn">
+                <button onClick={(e) => handleDelete(e, message.id)} type="button" className="btn" style={{ backgroundColor: 'red', color: 'white', cursor: 'pointer' }}>
                   Delete
                 </button>
               </>
@@ -113,11 +170,14 @@ const Message = ({ message, auth, deleteMessage, editMessage, clearMessageError 
                 >
                   Cancel
                 </button>
+             
               </>
             )}
           </>
         )}
       </form>
+
+
     </div>
   );
 };

@@ -9,14 +9,17 @@ import { registerSchema } from '../services/validators';
 const router = Router();
 
 router.post('/login', requireLocalAuth, (req, res) => {
+  console.log(req);
   const token = req.user.generateJWT();
   const me = req.user.toJSON();
+  me.organisation = req.user.organisation;
+  console.log(res);
   res.json({ token, me });
 });
 
 router.post('/register', async (req, res, next) => {
+  console.log('is callled')
   const { error } = Joi.validate(req.body, registerSchema);
-  console.log(error);
   if (error) {
     return res.status(422).send({ message: error.details[0].message });
   }
