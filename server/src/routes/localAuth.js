@@ -16,11 +16,12 @@ router.post('/login', requireLocalAuth, (req, res) => {
 
 router.post('/register', async (req, res, next) => {
   const { error } = Joi.validate(req.body, registerSchema);
+  console.log(error);
   if (error) {
     return res.status(422).send({ message: error.details[0].message });
   }
 
-  const { email, password, name, username } = req.body;
+  const { email, password, name, username, organisation } = req.body;
 
   try {
     const existingUser = await User.findOne({ email });
@@ -36,6 +37,7 @@ router.post('/register', async (req, res, next) => {
         password,
         username,
         name,
+        organisation,
         avatar: faker.image.avatar(),
       });
 

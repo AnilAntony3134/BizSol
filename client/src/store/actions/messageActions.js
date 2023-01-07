@@ -44,7 +44,7 @@ export const addMessage = (formData) => async (dispatch, getState) => {
   });
   try {
     const options = attachTokenToHeaders(getState);
-    const response = await axios.post('/api/messages', formData, options);
+    const response = await axios.post('https://localhost:80/api/messages', formData, options);
 
     dispatch({
       type: ADD_MESSAGE_SUCCESS,
@@ -65,7 +65,7 @@ export const deleteMessage = (id) => async (dispatch, getState) => {
   });
   try {
     const options = attachTokenToHeaders(getState);
-    const response = await axios.delete(`/api/messages/${id}`, options);
+    const response = await axios.delete(`https://localhost:80/api/messages/${id}`, options);
 
     dispatch({
       type: DELETE_MESSAGE_SUCCESS,
@@ -86,7 +86,7 @@ export const editMessage = (id, formData) => async (dispatch, getState) => {
   });
   try {
     const options = attachTokenToHeaders(getState);
-    const response = await axios.put(`/api/messages/${id}`, formData, options);
+    const response = await axios.put(`https://localhost:80/api/messages/${id}`, formData, options);
 
     dispatch({
       type: EDIT_MESSAGE_SUCCESS,

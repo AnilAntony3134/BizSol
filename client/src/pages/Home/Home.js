@@ -9,6 +9,7 @@ import MessageForm from '../../components/MessageForm/MessageForm';
 import { reseedDatabase } from '../../store/actions/authActions';
 
 import './styles.css';
+import LandingPage from '../../components/Landing Page/LandingPage';
 
 const ReseedMessage = ({ handleReseed }) => {
   return (
@@ -31,31 +32,21 @@ const Home = ({ auth, reseedDatabase }) => {
   return (
     <Layout>
       <div className="home-page">
-        <h1>Home page</h1>
         {!auth.isAuthenticated ? (
           <div>
-            <p>
-              Welcome guest!{' '}
-              <Link className="bold" to="/login">
-                Log in
-              </Link>{' '}
-              or{' '}
-              <Link className="bold" to="/register">
-                Register
-              </Link>
-            </p>
-            <ReseedMessage handleReseed={handleReseed} />
+            <LandingPage />
           </div>
         ) : (
           <>
-            <p>
+            <>
+              <h1>Home page</h1>
               Welcome <span className="name">{auth.me.name}</span>!
-            </p>
+            </>
             <ReseedMessage handleReseed={handleReseed} />
             <MessageForm />
+            <MessageList />
           </>
         )}
-        <MessageList />
       </div>
     </Layout>
   );

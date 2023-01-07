@@ -14,15 +14,15 @@ const Navbar = ({ auth, logOutUser, history }) => {
 
   return (
     <nav className="navbar">
-      <h2 className="logo">MERN Boilerplate</h2>
+      <h2 className="logo"><span className="logo-color">Biz</span>Sol</h2>
       <ul className="nav-links flex-1">
-        <li className="nav-item">
-          <Link to="/">Home</Link>
-        </li>
         {auth.isAuthenticated ? (
           <>
             <li className="nav-item">
-              <Link to="/users">Users</Link>
+              <Link to="/">Home</Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/users">Companies</Link>
             </li>
             <li className="nav-item">
               <Link to={`/${auth.me.username}`}>Profile</Link>
@@ -44,6 +44,9 @@ const Navbar = ({ auth, logOutUser, history }) => {
 
             <li className="nav-item">
               <Link to="/login">Login</Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/register">SignUp</Link>
             </li>
           </>
         )}

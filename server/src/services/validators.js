@@ -15,4 +15,10 @@ export const registerSchema = Joi.object().keys({
     .required(),
   email: Joi.string().trim().email().required(),
   password: Joi.string().trim().min(6).max(20).required(),
+  organisation: Joi.object({
+    name: Joi.string(),
+    flag: Joi.boolean(),
+    arg: Joi.string(),
+    value: Joi.string(),
+  })
 });

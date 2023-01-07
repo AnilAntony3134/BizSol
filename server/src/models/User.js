@@ -9,6 +9,22 @@ import { IMAGES_FOLDER_PATH } from '../utils/constants';
 
 const { Schema } = mongoose;
 
+const organisationSchema = new Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  flag: {
+    type: Boolean,
+    required: true
+  },
+  description: {
+    type: Boolean,
+    required: false
+  },
+  problems: [String]
+})
+
 const userSchema = new Schema(
   {
     provider: {
@@ -22,6 +38,10 @@ const userSchema = new Schema(
       required: [true, "can't be blank"],
       match: [/^[a-zA-Z0-9_]+$/, 'is invalid'],
       index: true,
+    },
+    organisation: {
+      type: organisationSchema,
+      required: false,
     },
     email: {
       type: String,
@@ -54,6 +74,7 @@ const userSchema = new Schema(
       sparse: true,
     },
     messages: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Message' }],
+    solutions: [{type: mongoose.Schema.Types.ObjectId, ref: 'Solution'}]
   },
   { timestamps: true },
 );

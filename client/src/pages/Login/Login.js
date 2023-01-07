@@ -28,16 +28,19 @@ const Login = ({ auth, history, loginUserWithEmail }) => {
 
   return (
     <div className="login">
-      <div className="container">
-        <h1>Log in page</h1>
-        <p>
-          back to{' '}
+      <div className="container-login">
+        <img width="700px" src='/assets/login.png' />
+      </div>
+      <div className="formcontainer" style={{marginLeft: '30px'}}>
+      <h1><span className="formTitle">Biz</span>Hub</h1>
+        <p>An amazing platform which bring businesses and problemsolvers under the same umbrella</p>
+         <p> back to{' '}
           <Link className="bold" to="/">
             Home page
           </Link>
         </p>
         <form onSubmit={formik.handleSubmit}>
-          <h2>Log in with social media</h2>
+          {/* <h2>Log in with social media</h2>
           <a className="fb btn" href={FACEBOOK_AUTH_LINK}>
             <span className="login-text">
               <i className="fa fa-facebook fa-fw" /> Login with Facebook
@@ -47,11 +50,11 @@ const Login = ({ auth, history, loginUserWithEmail }) => {
             <span className="login-text">
               <i className="fa fa-google fa-fw" /> Login with Google
             </span>
-          </a>
-          <h2>Login with email address</h2>
-          <p className="logins">Admin: email0@email.com 123456789</p>
-          <p className="logins">User: email1@email.com 123456789</p>
+          </a> */}
+          {/* <p className="logins">Admin: email0@email.com 123456789</p> */}
+          {/* <p className="logins">User: email1@email.com 123456789</p> */}
           <div>
+          <p className="logins">Name</p>
             <input
               placeholder="Email address"
               name="email"
@@ -64,6 +67,7 @@ const Login = ({ auth, history, loginUserWithEmail }) => {
             {formik.touched.email && formik.errors.email ? (
               <p className="error">{formik.errors.email}</p>
             ) : null}
+          <p className="logins">Password</p>
             <input
               placeholder="Password"
               name="password"
@@ -80,7 +84,7 @@ const Login = ({ auth, history, loginUserWithEmail }) => {
           {auth.error && <p className="error">{auth.error}</p>}
           <div>
             <button
-              className="btn submit"
+              className="submitbtn"
               disabled={auth.isLoading || !formik.isValid}
               type="submit"
             >
@@ -95,6 +99,7 @@ const Login = ({ auth, history, loginUserWithEmail }) => {
           </div>
         </form>
       </div>
+
     </div>
   );
 };

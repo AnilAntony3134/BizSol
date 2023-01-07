@@ -44,17 +44,21 @@ mongoose
 
 // cors
 app.use((req, res, next) => {
+  // res.setHeader("Access-Control-Allow-Origin", "*");
+  // res.setHeader(
+  //   "Access-Control-Allow-Headers",
+  //   "Origin, X-Requested-With ,Content-Type,Authorization ,Accept",
+  //   "HTTP/1.1 200 OK",
+  //   "append,delete,entries,foreach,get,has,keys,set,values,Authorization"
+  // );
+  // res.setHeader(
+  //   "Access-Control-Allow-Methods",
+  //   "GET,POST,PATCH,DELETE,OPTIONS,PUT"
+  // );
   res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With ,Content-Type,Authorization ,Accept",
-    "HTTP/1.1 200 OK",
-    "append,delete,entries,foreach,get,has,keys,set,values,Authorization"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET,POST,PATCH,DELETE,OPTIONS,PUT"
-  );
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+  res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, x-auth-token, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
   next();
 });
 

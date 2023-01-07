@@ -22,8 +22,7 @@ export const loadMe = () => async (dispatch, getState) => {
 
   try {
     const options = attachTokenToHeaders(getState);
-    const response = await axios.get('/api/users/me', options);
-
+    const response = await axios.get('https://localhost:80/api/users/me', options);
     dispatch({
       type: ME_SUCCESS,
       payload: { me: response.data.me },
@@ -39,8 +38,7 @@ export const loadMe = () => async (dispatch, getState) => {
 export const loginUserWithEmail = (formData, history) => async (dispatch, getState) => {
   dispatch({ type: LOGIN_WITH_EMAIL_LOADING });
   try {
-    const response = await axios.post('/auth/login', formData);
-
+    const response = await axios.post('https://localhost:80/auth/login', formData);
     dispatch({
       type: LOGIN_WITH_EMAIL_SUCCESS,
       payload: { token: response.data.token, me: response.data.me },
@@ -65,7 +63,7 @@ export const logInUserWithOauth = (token) => async (dispatch, getState) => {
       'x-auth-token': token,
     };
 
-    const response = await axios.get('/api/users/me', { headers });
+    const response = await axios.get('https://localhost:80/api/users/me', { headers });
 
     dispatch({
       type: LOGIN_WITH_OAUTH_SUCCESS,
@@ -84,7 +82,7 @@ export const logOutUser = (history) => async (dispatch) => {
   try {
     deleteAllCookies();
     //just to log user logut on the server
-    await axios.get('/auth/logout');
+    await axios.get('https://localhost:80/auth/logout');
 
     dispatch({
       type: LOGOUT_SUCCESS,
@@ -98,7 +96,7 @@ export const reseedDatabase = () => async (dispatch, getState) => {
     type: RESEED_DATABASE_LOADING,
   });
   try {
-    await axios.get('/api/users/reseed');
+    await axios.get('https://localhost:80/api/users/reseed');
 
     dispatch({
       type: RESEED_DATABASE_SUCCESS,
