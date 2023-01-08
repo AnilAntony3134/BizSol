@@ -8,5 +8,4 @@ export const messageFormSchema = Yup.object({
   incentive: Yup.number()
     .positive('Must be more than 0'),
   category: Yup.string()
-    .required('Required')
 });

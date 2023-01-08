@@ -13,26 +13,8 @@ import requireAuth from '../../hoc/requireAuth';
 import { profileSchema } from './validation';
 
 import './styles.css';
-
-//// nema password za oauth usere ni na klijentu ni serveru
-// validacija na serveru i error handilng na clientu
-// css i html
-//// delete user i logika da ne brise seedovane
-//// admin ruta i hoc
-// error handling login register posto je zajednicki loading i error
-//// mongo atlas i heroku deploy package json i promenljive env i config
-//// avatar staza u bazu samo fajl
-//// gitignore za placeholder avatar
-//// delete profile ruta
-
-// hendlovanje staza za slike, default avatar za izbrisane sa heroku
-// readme
-//// posle edit user treba redirect na novi username url
-
-// fore
-// za facebook more https apsolutni callback url
-// FACEBOOK_CALLBACK_URL=https://mern-boilerplate-demo.herokuapp.com/auth/facebook/callback
-// da bi prihvatio fb domen mora dole da se poklapa sa siteurl
+import Solutionlist from '../../components/Solutions/Solutionlist';
+import MessageList from '../../components/MessageList/MessageList';
 
 const Profile = ({
   getProfile,
@@ -121,7 +103,7 @@ const Profile = ({
                 <span className="info">{profile.role}</span>
               </div>
               <div>
-                <span className="label">{me.organisation?.flag ? 'Organisation Name': 'Name'} </span>
+                <span className="label">{me.organisation?.flag ? 'Organisation Name' : 'Name'} </span>
                 <span className="info">{profile.name}</span>
               </div>
               <div>
@@ -147,6 +129,7 @@ const Profile = ({
                   className="btn"
                   type="button"
                   onClick={handleClickEdit}
+                  style={{ backgroundColor: '#4040d4', color: 'white', cursor: 'pointer' }}
                   disabled={!(me?.username === profile.username || me?.role === 'ADMIN')}
                 >
                   {isEdit ? 'Cancel' : 'Edit'}
@@ -238,6 +221,16 @@ const Profile = ({
             </form>
           </div>
         )}
+        {console.log( profile.username)}
+        {!profile.organisation?.flag ? (
+          <Solutionlist />
+        ) : (
+          <>
+            <h1>Crisis List</h1>
+            <MessageList individual = {true} uId = {profile.id}/>
+          </>
+        )}
+
       </div>
     </Layout>
   );

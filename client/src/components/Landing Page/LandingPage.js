@@ -69,6 +69,17 @@ const LandingPage = () => {
 
                 </div>
             </div>
+           
+            <div className='container' style={{backgroundColor: '#4040d4', padding: '20px'}}>
+                <div className='niche-wrapper'>
+                    <video  src='/assets/main.mp4' autoPlay loop></video>
+                    <div className='solution-button'>
+                         <h4 style={{textAlign: 'center'}}>Upload your problem in 3 simple clicks</h4>
+                         <p>Simple and intuative UI</p>
+                    </div>
+
+                </div>
+            </div>
             <div className='container'>
                 <div className='niche-wrapper'>
                     <div className='solution-button'>

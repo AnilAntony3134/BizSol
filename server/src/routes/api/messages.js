@@ -46,6 +46,7 @@ router.post('/', requireJwtAuth, async (req, res) => {
 });
 
 router.delete('/:id', requireJwtAuth, async (req, res) => {
+  console.log(req.params.id);
   try {
     const tempMessage = await Message.findById(req.params.id).populate('user');
     if (!(tempMessage.user.id === req.user.id || req.user.role === 'ADMIN'))
@@ -54,7 +55,9 @@ router.delete('/:id', requireJwtAuth, async (req, res) => {
     const message = await Message.findByIdAndRemove(req.params.id).populate('user');
     if (!message) return res.status(404).json({ message: 'No message found.' });
     res.status(200).json({ message });
+    console.log(res);
   } catch (err) {
+    console.log(err)
     res.status(500).json({ message: 'Something went wrong.' });
   }
 });

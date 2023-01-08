@@ -36,6 +36,7 @@ export const validateMessage = (message) => {
     solution: Joi.string().min(5).max(800).required(),
     message: Joi.string().required(),
     organisation: Joi.string().required(),
+    user: Joi.string().required(),
   };
   return Joi.validate(message, schema);
 };

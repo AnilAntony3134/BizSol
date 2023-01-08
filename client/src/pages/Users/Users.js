@@ -15,14 +15,13 @@ const Users = ({ getUsers, users: { users, isLoading } }) => {
   useEffect(() => {
     getUsers();
   }, []);
-
+  users = users.filter(e => e.organisation?.flag === true);
   return (
     <Layout>
       <div className="users">
-        <h1>Users page</h1>
+        <h1>Companies</h1>
         <p>
-          This is the Users page. Here are listed all of the users of the app. Click the avatar or
-          the username link to go to user's profile. Only authenticated users can see this page.
+          This is the Companies page. Here are listed all of the companies which are requesting for services of the app.
         </p>
         <div className="list">
           {isLoading ? (

@@ -24,7 +24,7 @@ export const getSolutions = () => async (dispatch, getState) => {
   try {
     const options = attachTokenToHeaders(getState);
     const response = await axios.get('https://localhost:80/api/solutions', options);
-    console.log(response)
+    console.log(response,"ithano ath")
     dispatch({
       type: GET_SOLUTIONS_SUCCESS,
       payload: { solutions: response.data.messages},

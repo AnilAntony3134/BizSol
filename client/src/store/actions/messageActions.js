@@ -65,7 +65,9 @@ export const deleteMessage = (id) => async (dispatch, getState) => {
   });
   try {
     const options = attachTokenToHeaders(getState);
+    console.log('rrquiest came till here');
     const response = await axios.delete(`https://localhost:80/api/messages/${id}`, options);
+    console.log(response)
 
     dispatch({
       type: DELETE_MESSAGE_SUCCESS,

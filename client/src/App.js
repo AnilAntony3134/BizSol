@@ -15,7 +15,6 @@ import NotFound from './pages/NotFound/NotFound';
 import Loader from './components/Loader/Loader';
 
 import { logInUserWithOauth, loadMe } from './store/actions/authActions';
-import MessageOne from './components/MessageOne/MessageOne';
 
 const App = ({ logInUserWithOauth, auth, loadMe }) => {
   useEffect(() => {

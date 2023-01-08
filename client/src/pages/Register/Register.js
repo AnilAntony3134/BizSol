@@ -30,12 +30,13 @@ const Register = ({ auth, register: { isLoading, error }, history, registerUserW
         values.organisation.name = values.name;
         values.organisation.flag = true;
         values.organisation.description = values.description;
+        delete values.description;
       } 
       else{
         values.organisation = {};
         values.organisation.flag = false;
+        delete values.description;
       }
-      delete values.description;
       registerUserWithEmail(values, history);
     },
   });

@@ -3,18 +3,18 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { useFormik } from 'formik';
-import { Modal } from '@material-ui/core';
-
 import { deleteMessage, editMessage, clearMessageError } from '../../store/actions/messageActions';
 import { messageFormSchema } from './validation';
-
 import './styles.css';
-import Solution from '../Solutions/Solution';
-import MessageList from '../MessageList/MessageList';
+import MessageForm from '../MessageForm/MessageForm';
+import Solutionlist from '../Solutions/Solutionlist';
+
 
 const Message = ({ message, auth, deleteMessage, editMessage, clearMessageError }) => {
   const [isEdit, setIsEdit] = useState(false);
-  let [openModal, setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [openSolution, setOpenSolution] = useState(false);
+
 
   const handleDelete = (e, id) => {
     e.preventDefault();
@@ -115,7 +115,7 @@ const Message = ({ message, auth, deleteMessage, editMessage, clearMessageError 
         ) : (
           <>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <h2>{message.text.substring(0, 100)}</h2>
+              <h2 style={{maxWidth: '70%'}}>{message.text.substring(0, 100)}</h2>
               <p>{message.incentive ? `₹ ${message.incentive}` : 'undisclosed'}</p>
             </div>
             <p>{message.category}</p>
@@ -135,7 +135,7 @@ const Message = ({ message, auth, deleteMessage, editMessage, clearMessageError 
         {
           !auth.me.organisation?.flag && (
             <>
-              <button onClick={() => { setOpenModal(true) }} type="button" className="btn" style={{ backgroundColor: '#4040d4', color: 'white', cursor: 'pointer' }}>
+              <button onClick={() => { setOpenModal(!openModal) }} type="button" className="btn" style={{ backgroundColor: '#4040d4', color: 'white', cursor: 'pointer' }}>
                 Give Solution
               </button>
             </>
@@ -145,8 +145,8 @@ const Message = ({ message, auth, deleteMessage, editMessage, clearMessageError 
           <>
             {!isEdit ? (
               <>
-                <button onClick={handleClickEdit} type="button" className="btn" style={{ backgroundColor: 'green', color: 'white', cursor: 'pointer' }}>
-                  Solutions {message.solutions?.length() ? message.solutions?.length() : 0}
+                <button onClick={() => setOpenSolution(!openSolution)} type="button" className="btn" style={{ backgroundColor: 'green', color: 'white', cursor: 'pointer' }}>
+                  Submissions 
                 </button>
                 <button onClick={handleClickEdit} type="button" className="btn" style={{ backgroundColor: '#4040d4', color: 'white', cursor: 'pointer' }}>
                   Edit
@@ -170,14 +170,26 @@ const Message = ({ message, auth, deleteMessage, editMessage, clearMessageError 
                 >
                   Cancel
                 </button>
-             
+
               </>
             )}
           </>
         )}
+
+        { }
       </form>
 
+      {
+        openModal && (
+          <MessageForm setAddMessage={setOpenModal} isSolution={true} messageId={message.id} />
+        )
+      }
 
+      {
+        openSolution && (
+          <Solutionlist orgSolution={message.id}/>
+        )
+      }
     </div>
   );
 };

@@ -19,10 +19,10 @@ router.post('/login', requireLocalAuth, (req, res) => {
 
 router.post('/register', async (req, res, next) => {
   console.log('is callled')
-  const { error } = Joi.validate(req.body, registerSchema);
-  if (error) {
-    return res.status(422).send({ message: error.details[0].message });
-  }
+  // const { error } = Joi.validate(req.body, registerSchema);
+  // if (error) {
+  //   return res.status(422).send({ message: error.details[0].message });
+  // }
 
   const { email, password, name, username, organisation } = req.body;
 
