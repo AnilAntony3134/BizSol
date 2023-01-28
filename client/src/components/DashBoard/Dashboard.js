@@ -29,6 +29,12 @@ const Dashboard = ({ auth }) => {
         }
       }, [addpref]);
 
+    //   useEffect(() => {
+    //     if (!auth.appLoaded && !auth.isLoading && auth.token && !auth.isAuthenticated) {
+    //       loadMe();
+    //     }
+    //   }, [addpref]);
+
     return (
         <>
             <>

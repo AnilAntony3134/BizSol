@@ -115,7 +115,7 @@ const Profile = ({
                 <span className="label">Email: </span>
                 <span className="info">{profile.email}</span>
               </div>
-              
+
               <div>
                 <span className="label">Joined: </span>
                 <span className="info">
@@ -128,10 +128,14 @@ const Profile = ({
                   <span key={index} className="info"> {e.toLowerCase()}, </span>
                 ))}
               </div>
-              <div>
-                <span className="label">Slots Left: </span>
-                <span className="info"> {profile.slots} </span>
-              </div>
+              {
+                me.organisation.flag && (
+                  <div>
+                    <span className="label">Slots Left: </span>
+                    <span className="info"> {profile.slots} </span>
+                  </div>
+                )
+              }
               <div>
                 <button
                   className="btn"

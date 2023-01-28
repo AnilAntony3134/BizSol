@@ -1,16 +1,21 @@
 import { Card, Col, Row, Button, Text } from "@nextui-org/react";
 import React, { useEffect, useState } from 'react';
 import { connect } from "react-redux";
+import './styles.css'
 
-const WinnerModal = () => (
-  <Card css={{ w: "100%", h: "400px" }}>
-    <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
-      <Col>
-        <Text size={12} weight="bold" transform="uppercase" color="yellow">
-          Wohoo {}
+const WinnerModal = ({auth : {me}}) => (
+  <Card css={{ w: "100%", h: "500px" }}>
+    <Card.Header css={{ position: "absolute", zIndex: 1, top: 7}}>
+      
+      <Col style={{paddingTop:'-10px' }}>
+      <Text size={24} weight="bold" transform="uppercase" color="white">
+          Wohoo congrats {me.name}
         </Text>
-        <Text h3 color="yellow">
-          Your checklist for better sleep
+        <Text h3 color="yellow" size={56} className='hacknitrText'>
+          Your Answer 
+        </Text> 
+        <Text h3 color="yellow" size={56} className='hacknitrText'>
+          Has been Selected
         </Text>
       </Col>
     </Card.Header>
