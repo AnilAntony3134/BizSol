@@ -1,8 +1,17 @@
 import { Button, Card, Row, Text } from '@nextui-org/react'
 import React from 'react'
+import toast, { Toaster } from 'react-hot-toast';
+import { connect } from 'react-redux';
 import { PriceCardData } from '../../constants'
+import { updateUserPreferences } from '../../store/actions/usersActions';
 
-const PriceCard = () => {
+const notify = () => toast.success('Successfully Purchased Premium');
+
+const PriceCard = ({updateUserPreferences, auth: {me}}) => {
+    const handlePurchase = () => {
+        notify()
+        updateUserPreferences(me.id, {slots: 5});
+    }
     return (
         <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
             {
@@ -25,14 +34,19 @@ const PriceCard = () => {
                         <Card.Divider />
                         <Card.Footer>
                             <Row justify="center">
-                                <Button size="sm" color='success'>Buy Now</Button>
+                                <Button size="sm" color='success' onPress={handlePurchase}>Buy Now</Button>
                             </Row>
                         </Card.Footer>
                     </Card>
                 ))
             }
+            <Toaster />
         </div>
     )
 }
 
-export default PriceCard
+const mapStateToProps = (state) => ({
+    auth: state.auth,
+});
+
+export default connect(mapStateToProps, { updateUserPreferences })(PriceCard);

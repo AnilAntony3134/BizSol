@@ -1,29 +1,24 @@
-import { Button, Checkbox, Modal, Spacer, Textarea } from '@nextui-org/react';
+import { Button, Checkbox, Input, Modal, Spacer, Textarea } from '@nextui-org/react';
 import { Field, FieldArray, Form, useFormik } from 'formik';
 import React, { useState } from 'react'
 import { connect } from 'react-redux';
 import { updateUserPreferences } from '../../store/actions/usersActions';
 const PreferencesModal = ({ updateUserPreferences, auth: { me }, closeHandler, setDisplayForm, displayForm, isEdit }) => {
-    const [selected, setSelected] = useState([]);
-    const handleCategories = () => {
-        updateUserPreferences(me.id, { name: me.name, username: me.username, avatarpath: me.avatarpath, preferences: selected });
-        setDisplayForm({ ...displayForm, form1: false })
-        closeHandler()
-    }
-    const [ed, setEd] = useState([1, 2]);
-    const [we, setWe] = useState(1);
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
             education: '',
             workExperience: '',
+            twitter: '',
+            linkedIn: '',
+            other: '',
         },
         onSubmit: (values, { resetForm }) => {
             console.log(values)
-            // updateUserPreferences(me.id, {name: me.name, username: me.username, avatarpath: me.avatarpath, preferences: me.preferences, additionalInfo: values});
-            // setDisplayForm({...displayForm, form2: false})
-            // resetForm()
-            // closeHandler()
+            updateUserPreferences(me.id, {preferences: me.preferences, additionalInfo: values});
+            setDisplayForm({...displayForm, form2: false})
+            resetForm()
+            closeHandler()
         },
     });
 
@@ -33,7 +28,7 @@ const PreferencesModal = ({ updateUserPreferences, auth: { me }, closeHandler, s
                 <h1>Select your preferred Fields</h1>
             </Modal.Header>
             <Modal.Body>
-                <form>
+                <form onSubmit={formik.handleSubmit}>
                     <Textarea
                         clearable
                         minRows={20}
@@ -60,6 +55,40 @@ const PreferencesModal = ({ updateUserPreferences, auth: { me }, closeHandler, s
                     // disabled={message.isLoading}
                     />
                     <Spacer y={1}/>
+                    <Input 
+                    name="twitter"
+                    fullWidth
+                    label="Twitter"
+                    clearable
+                    value={formik.values.twitter}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    />
+                    <Spacer y={1}/>
+
+                    <Input 
+                    name="linkedIn"
+                    fullWidth
+                    label="linkedIn"
+                    clearable
+                    value={formik.values.linkedIn}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    />
+                    <Spacer y={1}/>
+
+                    <Input 
+                    name="other"
+                    fullWidth
+                    label="Other Portfolios"
+                    clearable
+                    value={formik.values.other}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    />
+                    <Spacer y={1}/>
+
+
                     <div style={{display: 'flex', justifyContent: 'center'}}>
                     <Button type='submit'>Submit</Button>
 

@@ -5,10 +5,12 @@ import { getSingleMessage, editMessage } from '../../store/actions/messageAction
 import { editSolution } from '../../store/actions/solutionActions';
 import { updateUserPreferences } from '../../store/actions/usersActions';
 
-const DeclareWinnerModal = ({ solutions, getSingleMessage, editSolution, editMessage, updateUserPreferences, closeHandler, message: { messages }, auth: {me} }) => {
+const DeclareWinnerModal = ({ solutions, themessage, message: {messages}, editSolution, editMessage, updateUserPreferences, closeHandler, auth: {me} }) => {
+    console.log(messages)
     useEffect(() => {
-        getSingleMessage(solutions?.[0]?.message)
-    }, [solutions?.[0]?.message])
+            getSingleMessage(themessage);
+   
+    }, [themessage])
 
     const handlePriceSelection = () => {
         solutions.map(e => {
@@ -22,6 +24,7 @@ const DeclareWinnerModal = ({ solutions, getSingleMessage, editSolution, editMes
     }
 
     return (
+        // <div>hi</div>
         <Grid.Container gap={2} direction='column'>
             <h1>Declare Winners</h1>
             <div sm={12} md={5} css={{ justifyContent: 'center', display: 'grid', alignItems: 'center' }}>
@@ -52,7 +55,7 @@ const DeclareWinnerModal = ({ solutions, getSingleMessage, editSolution, editMes
             ) : (
                 <h4>The total amount Rs {messages[0].incentive} is split into {solutions.length} ie Rs {messages[0].incentive / solutions.length} each</h4>
             )}
-            <Button onPress={handlePriceSelection}>Confirm Selection</Button>
+            <Button onPress={() => handlePriceSelection()}>Confirm Selection</Button>
         </Grid.Container>
     );
 }

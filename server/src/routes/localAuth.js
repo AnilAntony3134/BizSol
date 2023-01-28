@@ -6,6 +6,23 @@ import User from '../models/User';
 import requireLocalAuth from '../middleware/requireLocalAuth';
 import { registerSchema } from '../services/validators';
 
+const images = [
+  "/assets/Netflix Avatars/3Below Tales of Arcadia/3Below Tales of Arcadia 01.png",
+  "/assets/Netflix Avatars/3Below Tales of Arcadia/3Below Tales of Arcadia 02.png",
+  "/assets/Netflix Avatars/3Below Tales of Arcadia/3Below Tales of Arcadia 03.png",
+  "/assets/Netflix Avatars/3Below Tales of Arcadia/3Below Tales of Arcadia 04.png",
+  "/assets/Netflix Avatars/3Below Tales of Arcadia/3Below Tales of Arcadia 05.png",
+  "/assets/Netflix Avatars/3Below Tales of Arcadia/3Below Tales of Arcadia 06.png",
+  "/assets/Netflix Avatars/3Below Tales of Arcadia/3Below Tales of Arcadia 07.png",
+  "/assets/Netflix Avatars/3Below Tales of Arcadia/3Below Tales of Arcadia 08.png",
+  "/assets/Netflix Avatars/Lost in Space/Lost in Space 01.png",
+  "/assets/Netflix Avatars/Lost in Space/Lost in Space 02.png",
+  "/assets/Netflix Avatars/Lost in Space/Lost in Space 03.png",
+  "/assets/Netflix Avatars/Lost in Space/Lost in Space 04.png",
+  "/assets/Netflix Avatars/Lost in Space/Lost in Space 05.png",
+  "/assets/Netflix Avatars/Lost in Space/Lost in Space 06.png",
+]
+
 const router = Router();
 
 router.post('/login', requireLocalAuth, (req, res) => {
@@ -17,7 +34,6 @@ router.post('/login', requireLocalAuth, (req, res) => {
 });
 
 router.post('/register', async (req, res, next) => {
-  console.log('is callled', req.body)
   const { error } = Joi.validate(req.body, registerSchema);
   if (error) {
     return res.status(422).send({ message: error.details[0].message });
@@ -41,7 +57,7 @@ router.post('/register', async (req, res, next) => {
         name,
         organisation,
         role,
-        avatar: faker.image.avatar(),
+        avatar: images[Math.floor(Math.random() * 14)],
       });
 
       newUser.registerUser(newUser, (err, user) => {

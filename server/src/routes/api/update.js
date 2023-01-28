@@ -6,14 +6,14 @@ import User from '../../models/User';
 const router = Router();
 
 router.put('/:id', requireJwtAuth, async (req, res, next) => {
-    console.log(req.body)
+    console.log(req.body,'this is rrq')
     try {
-        const updatedUser = { preferences: req.body.preferences, slots: req.body.slots };
         let user = await User.findByIdAndUpdate(
             req.params.id,
             {
                 preferences: req.body.preferences, 
-                slots: req.body.slots
+                slots: req.body.slots,
+                additionalInfo: req.body.additionalInfo
             },
             { new: true },
         );

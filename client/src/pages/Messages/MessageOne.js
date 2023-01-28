@@ -22,28 +22,28 @@ import WinnersModal from '../../components/WinnersModal/WinnersModal';
 
 const MessageOne = ({
     getSingleMessage,
-    message: { messages },
+    message: { messages, isLoading=true },
     solution: { solutions },
     winnerSolutions,
     auth: { me },
     match,
 }) => {
+    console.log(solutions);
+    console.log(messages,'messa')
     const [tab, setTab] = useState(0);
     const [openWinnersModal, setOpenWinnersModal] = useState(false);
     const matchMessageId = match.params.id;
-
-
     const closeHandler = () => setOpenWinnersModal(false);
-
     useEffect(() => {
         getSingleMessage(matchMessageId);
         winnerSolutions(matchMessageId);
     }, [matchMessageId]);
 
-    console.log(solutions, 'is this acually working')
-
     return (
         <Layout style={{ margin: '0px' }}>
+               {isLoading ? (
+          <Loader />
+        ) : (
             <div className="profile" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                 <Link to='/'>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -75,12 +75,12 @@ const MessageOne = ({
                         <Text>Difficulty: <Badge css={{ border: 'none' }} color={messages?.[0]?.difficulty === 'easy' ? 'success' : 'warning'}>{messages?.[0]?.difficulty.toUpperCase()}</Badge> </Text>
                     </Grid>
                 </div>
+                {console.log(typeof(messages[0]?.winnerDeclared),'sheda')}
                 {
-                    messages?.[0]?.winnerDeclared && (
+                    messages[0]?.winnerDeclared == 'true' && (
                         <div style={{ width: '100%', backgroundColor: 'green', color: 'white', padding: '10px', textAlign: 'center', borderRadius: '10px', margin: '10px' }}>
-                            <span>Winners has already been declared, see the results</span> <span style={{ cursor: 'pointer', color: 'blue' }} onClick={() => setOpenWinnersModal(true)}>here</span>
-                        </div>
-
+                        <span>Winners has already been declared, see the results</span> <span style={{ cursor: 'pointer', color: 'blue' }} onClick={() => setOpenWinnersModal(true)}>here</span>
+                    </div>
                     )
                 }
                 <Modal
@@ -91,7 +91,7 @@ const MessageOne = ({
                     width="60vw"
                 >
                     {solutions.length && (
-                        <WinnersModal solutions={solutions} />
+                        <WinnersModal solutions={solutions} message={matchMessageId}/>
                     )}
                 </Modal>
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -123,6 +123,7 @@ const MessageOne = ({
 
                 }
             </div>
+        )}
         </Layout>
     );
 };

@@ -122,13 +122,16 @@ const Solution = ({ solution, auth, user, deleteSolution, editSolution, clearSol
                 )}
                 <div style={{ display: 'flex', marginTop: '-25px', justifyContent: 'flex-start' }}>
                     <Grid css={{ display: 'flex', alignItems: 'center' }}>
+                        <Link to={`/${auth.me.username}`}>
                         <Avatar
                             size='md'
                             src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
                             color="primary"
                             bordered
                             squared
-                        />
+                            style={{cursor: 'pointer'}}
+                            />
+                            </Link>
                     </Grid>
                     <Grid>
                         <p color='primary' size='$xl' weight="bold" style={{

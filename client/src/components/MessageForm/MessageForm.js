@@ -29,13 +29,14 @@ const MessageForm = ({ addMessage, message: { messages }, isSolution, auth: { me
     onSubmit: (values, { resetForm }) => {
       console.log('is this getting triggered')
       isEdit ? editMessage({ title: values.title, text: values.text, difficulty: selectedDifficulty, public: selectPublic, incentive: values.incentive, category: selected }) : addMessage({ title: values.title, text: values.text, difficulty: selectedDifficulty, public: selectPublic, incentive: values.incentive, category: selected });
-      console.log('yeyeyey', parseInt(me.slots-1), me.slots)
-      updateUserPreferences(me.id, { name: me.name, username: me.username, avatarpath: me.avatarpath, preferences: me.preferences, additionalInfo: me.additionalInfo, slots: me.slots-1});
+      updateUserPreferences(me.id, { name: me.name, username: me.username, avatarpath: me.avatarpath, preferences: me.preferences, additionalInfo: me.additionalInfo, slots: parseInt(me.slots)-1});
       resetForm();
       closeHandler();
     },
   });
-
+  
+  console.log('yeyeyey', me.slots-1)
+  // console.log(typeof(me.slots),'slslsls')
   const isSubmiting = messages.some((m) => m.id === 0);
 
   return (

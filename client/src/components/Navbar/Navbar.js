@@ -2,10 +2,10 @@ import React, { useContext } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
-
+import { AiFillFire } from 'react-icons/ai'
 import { logOutUser } from '../../store/actions/authActions';
 import './styles.css';
-import { Avatar } from '@nextui-org/react';
+import { Avatar, Spacer } from '@nextui-org/react';
 
 const Navbar = ({ auth, logOutUser, history }) => {
   const onLogOut = (event) => {
@@ -36,10 +36,15 @@ const Navbar = ({ auth, logOutUser, history }) => {
               </li>
             )}
             <li className="flex-1" />
+            <div style={{display:'flex',justifyContent:'center',alignItems: 'center', fontSize: '1.5rem'}}>
+              {auth.me.slots}
+              <AiFillFire style={{color: 'red', fontSize: '2.1rem'}}/>
+              <Spacer x={1}/>
+            </div>
             <Link to={`/${auth.me.username}`}>
               <Avatar
                 size="lg"
-                src="/assets/Netflix Avatars/3Below Tales of Arcadia/3Below Tales of Arcadia 04.png"
+                src={auth.me.avatar}
                 color="primary"
                 bordered
                 circle

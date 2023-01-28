@@ -2,9 +2,8 @@ import React, { useEffect } from 'react'
 import Loader from '../Loader/Loader'
 import Solution from '../Solutions/Solution';
 
-const WinnersModal = ({solutions}) => {
-    console.log(solutions,'this coool')
-    const selected = solutions.filter(e=> e.selected);
+const WinnersModal = ({solutions, message}) => {
+  const selected = solutions.filter(e=> e.selected && message === e.message);
   return (
     <div className="message-list">
     <div className="list" style={{padding: '0 15%'}}>

@@ -16,7 +16,7 @@ const Dashboard = ({ auth }) => {
     const [showPrice, setShowPrice] = useState(false);
     const [addpref, setaAdpref] = useState({form1: false, form2: false});
     console.log(auth);
-    const [displayForm, setDisplayForm] = useState({ form1: auth.me?.preferences?.length ? false : true, form2: auth.me?.additionalInfo?.length ? false : true })
+    const [displayForm, setDisplayForm] = useState({ form1: auth.me?.preferences?.length ? false : true, form2: Object.keys(auth.me?.additionalInfo || {}).length !== 0 ? false : true })
     console.log(displayForm,'displayform')
     const closeHandler = () => setIsAddMessage(false);
     const closePreferences = () => setaAdpref({...addpref, form1: false});
@@ -35,7 +35,7 @@ const Dashboard = ({ auth }) => {
                     <h1>Dash<span style={{ color: '#4040d4' }}>Board</span></h1>
                     {
                         auth.me.organisation?.flag && (
-                            <Button className='bg-indigo-700 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' style={{ width: '200px', backgroundColor: '#4040d4' }} onClick={() => auth.me.slots !== 0 ? setIsAddMessage(true) : setShowPrice(true)}>{isaddMessage ? 'Hide Write Message' : 'New Issue'}</Button>
+                            <Button className='bg-indigo-700 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' style={{ width: '200px', backgroundColor: '#4040d4' }} onClick={() => auth.me.slots !== 1 ? setIsAddMessage(true) : setShowPrice(true)}>{isaddMessage ? 'Hide Write Message' : 'New Issue'}</Button>
                         )
                     }
                 </div>
@@ -46,7 +46,7 @@ const Dashboard = ({ auth }) => {
                 </div>
             </>
             {
-                !displayForm.form1 && displayForm.form2 && auth.me.organisation.flag && (
+                !displayForm.form1 && displayForm.form2 && !auth.me.organisation.flag && (
                     <div style={{ border: '1px solid var(--main)', borderRadius: '10px', padding: '10px', margin: '20px 0px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <div>
                             <h5>Hey there,</h5>
@@ -91,7 +91,7 @@ const Dashboard = ({ auth }) => {
                 onClose={closeAdditionalInfo}
                 width="40vw"
             >
-                <AdditionalInfo />
+                <AdditionalInfo setDisplayForm={setDisplayForm} display={displayForm}/>
             </Modal>
             <Modal
                 closeButton

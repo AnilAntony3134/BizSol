@@ -48,7 +48,7 @@ const Shortlisted = ({ getSolutions, solution: { solutions, isLoading, error }, 
           onClose={closeHandler}
           width="60vw"
         >
-          <DeclareWinnerModal solutions={selected.map(e => (solutions.find(m => m.id === e)))} closeHandler={closeHandler}/>
+          <DeclareWinnerModal solutions={selected.map(e => (solutions.find(m => m.id === e)))} message={solutions[0]?.message} closeHandler={closeHandler}/>
           {/* <PriceCard /> */}
         </Modal>
         {isLoading ? (

@@ -76,7 +76,8 @@ const userSchema = new Schema(
     messages: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Message' }],
     solutions: [{type: mongoose.Schema.Types.ObjectId, ref: 'Solution'}],
     additionalInfo: {
-      type: [Object],
+      type: Object,
+      default: {}
     },
     preferences: {
       type: [String],
@@ -97,19 +98,19 @@ console.log(join(__dirname, '../..', IMAGES_FOLDER_PATH));
 
 userSchema.methods.toJSON = function () {
   // if not exists avatar1 default
-  const absoluteAvatarFilePath = `${join(__dirname, '../..', IMAGES_FOLDER_PATH)}${this.avatar}`;
-  const avatar = isValidUrl(this.avatar)
-    ? this.avatar
-    : fs.existsSync(absoluteAvatarFilePath)
-    ? `${IMAGES_FOLDER_PATH}${this.avatar}`
-    : `${IMAGES_FOLDER_PATH}avatar2.jpg`;
+  // const absoluteAvatarFilePath = `${join(__dirname, '../..', IMAGES_FOLDER_PATH)}${this.avatar}`;
+  // const avatar = isValidUrl(this.avatar)
+  //   ? this.avatar
+  //   : fs.existsSync(absoluteAvatarFilePath)
+  //   ? `${IMAGES_FOLDER_PATH}${this.avatar}`
+  //   : `${IMAGES_FOLDER_PATH}avatar2.jpg`;
 
   return {
     id: this._id,
     provider: this.provider,
     email: this.email,
     username: this.username,
-    avatar: avatar,
+    avatar: this.avatar,
     name: this.name,
     role: this.role,
     createdAt: this.createdAt,

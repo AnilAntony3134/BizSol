@@ -115,6 +115,7 @@ const Profile = ({
                 <span className="label">Email: </span>
                 <span className="info">{profile.email}</span>
               </div>
+              
               <div>
                 <span className="label">Joined: </span>
                 <span className="info">

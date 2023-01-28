@@ -6,7 +6,7 @@ import { updateUserPreferences } from '../../store/actions/usersActions';
 const PreferencesModal = ({updateUserPreferences, auth: {me}, closeHandler, setDisplayForm, displayForm}) => {
   const [selected, setSelected] = useState([]);
   const handleCategories = () => {
-    updateUserPreferences(me.id, {name: me.name, username: me.username, avatarpath: me.avatarpath, preferences: selected});
+    updateUserPreferences(me.id, {preferences: selected});
     setDisplayForm({...displayForm, form1: false})
     closeHandler()
   }
