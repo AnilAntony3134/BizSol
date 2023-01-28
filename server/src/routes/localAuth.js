@@ -9,22 +9,21 @@ import { registerSchema } from '../services/validators';
 const router = Router();
 
 router.post('/login', requireLocalAuth, (req, res) => {
-  console.log(req);
   const token = req.user.generateJWT();
   const me = req.user.toJSON();
+  console.log(me);
   me.organisation = req.user.organisation;
-  console.log(res);
   res.json({ token, me });
 });
 
 router.post('/register', async (req, res, next) => {
-  console.log('is callled')
-  // const { error } = Joi.validate(req.body, registerSchema);
-  // if (error) {
-  //   return res.status(422).send({ message: error.details[0].message });
-  // }
+  console.log('is callled', req.body)
+  const { error } = Joi.validate(req.body, registerSchema);
+  if (error) {
+    return res.status(422).send({ message: error.details[0].message });
+  }
 
-  const { email, password, name, username, organisation } = req.body;
+  const { email, password, name, username, organisation, role='USER' } = req.body;
 
   try {
     const existingUser = await User.findOne({ email });
@@ -41,6 +40,7 @@ router.post('/register', async (req, res, next) => {
         username,
         name,
         organisation,
+        role,
         avatar: faker.image.avatar(),
       });
 

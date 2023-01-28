@@ -18,8 +18,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(passport.initialize());
 require('./services/jwtStrategy');
-require('./services/facebookStrategy');
-require('./services/googleStrategy');
+// require('./services/facebookStrategy');
+// require('./services/googleStrategy');
 require('./services/localStrategy');
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -35,26 +35,15 @@ mongoose
     useUnifiedTopology: true,
     useFindAndModify: false,
   })
-  // .then(() => {
-  //   console.log('MongoDB Connected...');
-  //   // seedDb();
-  // })
+  .then(() => {
+    console.log('MongoDB Connected...');
+    // seedDb();
+  })
   .catch((err) => console.log(err));
 
 
 // cors
 app.use((req, res, next) => {
-  // res.setHeader("Access-Control-Allow-Origin", "*");
-  // res.setHeader(
-  //   "Access-Control-Allow-Headers",
-  //   "Origin, X-Requested-With ,Content-Type,Authorization ,Accept",
-  //   "HTTP/1.1 200 OK",
-  //   "append,delete,entries,foreach,get,has,keys,set,values,Authorization"
-  // );
-  // res.setHeader(
-  //   "Access-Control-Allow-Methods",
-  //   "GET,POST,PATCH,DELETE,OPTIONS,PUT"
-  // );
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,DELETE");
@@ -87,8 +76,11 @@ if (isProduction) {
     cert: readFileSync(resolve(__dirname, '../security/cert.pem')),
   };
 
-  const server = https.createServer(httpsOptions, app).listen(port, () => {
-    console.log('https server running at ' + port);
-    // console.log(all_routes(app));
-  });
+  // const server = https.createServer(app).listen(port, () => {
+  //   console.log('https server running at ' + port);
+  //   // console.log(all_routes(app));
+  // });
+  app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`)
+  })
 }

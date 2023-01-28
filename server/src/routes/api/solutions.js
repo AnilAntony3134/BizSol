@@ -38,9 +38,10 @@ router.post('/', requireJwtAuth, async (req, res) => {
   console.log('is this owkringn');
   try {
     let message = await Solution.create({
+      title: req.body.title,
       solution: req.body.solution,
       message: req.body.message,
-      organisation: req.body.message,
+      organisation: req.body.organisation,
       user: req.user.id,
     });
     message = await message.populate('user').execPopulate();
@@ -71,12 +72,13 @@ router.put('/:id', requireJwtAuth, async (req, res) => {
 
   try {
     const tempSolution = await Solution.findById(req.params.id).populate('user');
-    if (!(tempSolution.user.id === req.user.id || req.user.role === 'ADMIN'))
+    if (!(tempSolution.user.id === req.user.id || req.user.role === 'ADMIN' || req.user.id === req.body.organisation))
       return res.status(400).json({ message: 'Not the message owner or admin.' });
+      console.log(req.body)
 
     let message = await Solution.findByIdAndUpdate(
       req.params.id,
-      { solution: req.body.solution, message: req.body.message, user: tempSolution.user.id , organisation: req.body.organisation},
+      {title: req.body.title, solution: req.body.solution, message: req.body.message, user: tempSolution.user.id , organisation: req.body.organisation,  shortlisted: req.body.shortlisted,  selected: req.body.selected, price: req.body.price},
       { new: true },
     );
     if (!message) return res.status(404).json({ message: 'No message found.' });

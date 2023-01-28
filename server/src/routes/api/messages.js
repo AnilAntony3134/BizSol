@@ -32,8 +32,11 @@ router.post('/', requireJwtAuth, async (req, res) => {
   if (error) return res.status(400).json({ message: error.details[0].message });
   try {
     let message = await Message.create({
+      title: req.body.title,
       text: req.body.text,
       incentive: req.body.incentive,
+      difficulty: req.body.difficulty,
+      public: req.body.public,
       category: req.body.category,
       user: req.user.id,
     });
@@ -65,7 +68,6 @@ router.delete('/:id', requireJwtAuth, async (req, res) => {
 router.put('/:id', requireJwtAuth, async (req, res) => {
   const { error } = validateMessage(req.body);
   if (error) return res.status(400).json({ message: error.details[0].message });
-
   try {
     const tempMessage = await Message.findById(req.params.id).populate('user');
     if (!(tempMessage.user.id === req.user.id || req.user.role === 'ADMIN'))
@@ -73,11 +75,21 @@ router.put('/:id', requireJwtAuth, async (req, res) => {
 
     let message = await Message.findByIdAndUpdate(
       req.params.id,
-      { text: req.body.text, incentive: req.body.incentive, user: tempMessage.user.id, category: req.body.category },
+      {
+        title: req.body.title, 
+        text: req.body.text, 
+        incentive: req.body.incentive, 
+        user: tempMessage.user.id, 
+        difficulty: req.body.difficulty,
+        public: req.body.public,
+        category: req.body.category,
+        winnerDeclared: req.body.winnerDeclared,
+      },
       { new: true },
     );
     if (!message) return res.status(404).json({ message: 'No message found.' });
     message = await message.populate('user').execPopulate();
+
 
     res.status(200).json({ message });
   } catch (err) {

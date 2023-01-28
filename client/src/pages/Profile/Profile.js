@@ -31,6 +31,7 @@ const Profile = ({
   const [avatar, setAvatar] = useState(null);
   const retryCount = useRef(0);
   const matchUsername = match.params.username;
+  console.log(me);
 
   useEffect(() => {
     getProfile(matchUsername, history);
@@ -84,10 +85,6 @@ const Profile = ({
     <Layout>
       <div className="profile">
         <h1>Profile page</h1>
-        <p>
-          This is the profile page. User can edit his own profile and Admin can edit any user's
-          profile. Only authenticated users can see this page.
-        </p>
         {isLoading ? (
           <Loader />
         ) : (
@@ -103,7 +100,7 @@ const Profile = ({
                 <span className="info">{profile.role}</span>
               </div>
               <div>
-                <span className="label">{me.organisation?.flag ? 'Organisation Name' : 'Name'} </span>
+                <span className="label">{me?.organisation?.flag ? 'Organisation Name' : 'Name'} </span>
                 <span className="info">{profile.name}</span>
               </div>
               <div>
@@ -123,6 +120,16 @@ const Profile = ({
                 <span className="info">
                   {moment(profile.createdAt).format('dddd, MMMM Do YYYY, H:mm:ss')}
                 </span>
+              </div>
+              <div>
+                <span className="label">Preferences: </span>
+                {profile.preferences?.map((e, index) => (
+                  <span key={index} className="info"> {e.toLowerCase()}, </span>
+                ))}
+              </div>
+              <div>
+                <span className="label">Slots Left: </span>
+                <span className="info"> {profile.slots} </span>
               </div>
               <div>
                 <button
@@ -221,15 +228,14 @@ const Profile = ({
             </form>
           </div>
         )}
-        {console.log( profile.username)}
-        {!profile.organisation?.flag ? (
+        {/* {!profile.organisation?.flag ? (
           <Solutionlist />
         ) : (
           <>
             <h1>Crisis List</h1>
             <MessageList individual = {true} uId = {profile.id}/>
           </>
-        )}
+        )} */}
 
       </div>
     </Layout>

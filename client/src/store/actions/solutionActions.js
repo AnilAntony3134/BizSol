@@ -16,6 +16,7 @@ import {
   EDIT_SOLUTION_FAIL,
   CLEAR_SOLUTION_ERROR,
 } from '../types';
+import { toast } from 'react-hot-toast';
 
 export const getSolutions = () => async (dispatch, getState) => {
   dispatch({
@@ -23,8 +24,7 @@ export const getSolutions = () => async (dispatch, getState) => {
   });
   try {
     const options = attachTokenToHeaders(getState);
-    const response = await axios.get('https://localhost:80/api/solutions', options);
-    console.log(response,"ithano ath")
+    const response = await axios.get('http://localhost:80/api/solutions', options);
     dispatch({
       type: GET_SOLUTIONS_SUCCESS,
       payload: { solutions: response.data.messages},
@@ -37,6 +37,28 @@ export const getSolutions = () => async (dispatch, getState) => {
   }
 };
 
+export const winnerSolutions = (message) => async (dispatch, getState) => {
+  dispatch({
+    type: ADD_SOLUTION_LOADING,
+    payload: {me: { ...getState().auth.me} },
+  });
+  try {
+    const options = attachTokenToHeaders(getState);
+    const response = await axios.get('http://localhost:80/api/solutions', options);
+    const filteredData = response.data.messages.filter(e => e.message === message && e.selected)
+    dispatch({
+      type: GET_SOLUTIONS_SUCCESS,
+      payload: { solutions:  filteredData},
+    })
+  }
+  catch(err){
+    dispatch({
+      type: GET_SOLUTIONS_FAIL,
+      payload: {error: err?.response?.data?.message || err.message}
+    })
+  }
+}
+
 export const addSolution = (formData) => async (dispatch, getState) => {
   dispatch({
     type: ADD_SOLUTION_LOADING,
@@ -44,7 +66,7 @@ export const addSolution = (formData) => async (dispatch, getState) => {
   });
   try {
     const options = attachTokenToHeaders(getState);
-    const response = await axios.post('https://localhost:80/api/solutions', formData, options);
+    const response = await axios.post('http://localhost:80/api/solutions', formData, options);
 
     dispatch({
       type: ADD_SOLUTION_SUCCESS,
@@ -65,7 +87,7 @@ export const deleteSolution = (id) => async (dispatch, getState) => {
   });
   try {
     const options = attachTokenToHeaders(getState);
-    const response = await axios.delete(`https://localhost:80/api/solutions/${id}`, options);
+    const response = await axios.delete(`http://localhost:80/api/solutions/${id}`, options);
 
     dispatch({
       type: DELETE_SOLUTION_SUCCESS,
@@ -86,12 +108,13 @@ export const editSolution = (id, formData) => async (dispatch, getState) => {
   });
   try {
     const options = attachTokenToHeaders(getState);
-    const response = await axios.put(`https://localhost:80/api/solutions/${id}`, formData, options);
+    const response = await axios.put(`http://localhost:80/api/solutions/${id}`, formData, options);
 
     dispatch({
       type: EDIT_SOLUTION_SUCCESS,
       payload: { message: response.data.message },
     });
+    toast.success('Successfully created!');
   } catch (err) {
     dispatch({
       type: EDIT_SOLUTION_FAIL,

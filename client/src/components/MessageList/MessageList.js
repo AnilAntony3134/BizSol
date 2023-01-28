@@ -31,23 +31,27 @@ const MessageList = ({ getMessages, message: { messages, isLoading, error }, aut
     <div className="message-list">
       {error && <div className="error-center">{error}</div>}
       <div className="list">
-        <form onSubmit={(e) => handleSelect(e.target.value)}>
-          <span style={{marginTop: '20px', marginRight: '10px'}}>Filters</span>
-          <select
-            style={{margin: '5px', fontSize: '1.2rem', border: 'none'}}
-          >
-            <option value="" label="select">Select</option>
-            <option label="technical" value="technical">Technical</option>
-            <option label="management" value="management">Management</option>
-            <option label="writing" value="writing">Writing</option>
-            <option label="creativethinking" value="creativethinking">Creative thinking</option>
-            <option label="supplychain" value="supplychain">Supply chain</option>
-            <option label="resources" value="resources">Resources</option>
-            <option label="networking" value="networking">Networking</option>
-            <option label="other" value="other">Other</option>
-          </select>
-          <submit style={{backgroundColor: 'grey', padding: '5px', borderRadius: '5px', fontSize: '0.8rem', cursor: 'pointer'}}>Apply</submit>
-        </form>
+        {
+          !me.organisation.flag && (
+            <form onSubmit={(e) => handleSelect(e.target.value)}>
+              <span style={{ marginTop: '20px', marginRight: '10px' }}>Filters</span>
+              <select
+                style={{ margin: '5px', fontSize: '1.2rem', border: 'none' }}
+              >
+                <option value="" label="select">Select</option>
+                <option label="technical" value="technical">Technical</option>
+                <option label="management" value="management">Management</option>
+                <option label="writing" value="writing">Writing</option>
+                <option label="creativethinking" value="creativethinking">Creative thinking</option>
+                <option label="supplychain" value="supplychain">Supply chain</option>
+                <option label="resources" value="resources">Resources</option>
+                <option label="networking" value="networking">Networking</option>
+                <option label="other" value="other">Other</option>
+              </select>
+              <button type='submit' style={{ backgroundColor: 'grey', padding: '5px', borderRadius: '5px', fontSize: '0.8rem', cursor: 'pointer' }}>Apply</button>
+            </form>
+          )
+        }
 
         {isLoading ? (
           <Loader />
@@ -60,17 +64,17 @@ const MessageList = ({ getMessages, message: { messages, isLoading, error }, aut
         )}
       </div>
       {messages.length >= 6 && (
-      <ReactPaginate
-        className='paginate'
-        breakLabel="..."
-        nextLabel="next >"
-        onPageChange={handlePageClick}
-        pageRangeDisplayed={5}
-        pageCount={pageCount}
-        previousLabel="< previous"
-        renderOnZeroPageCount={null}
-        activeLinkClassName='activeLink'
-      />)}
+        <ReactPaginate
+          className='paginate'
+          breakLabel="..."
+          nextLabel="next >"
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={5}
+          pageCount={pageCount}
+          previousLabel="< previous"
+          renderOnZeroPageCount={null}
+          activeLinkClassName='activeLink'
+        />)}
     </div>
   );
 };

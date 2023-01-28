@@ -4,6 +4,7 @@ import {
   GET_MESSAGES_FAIL,
   ADD_MESSAGE_LOADING,
   ADD_MESSAGE_SUCCESS,
+  GET_SINGLEMESSAGE_SUCCESS,
   ADD_MESSAGE_FAIL,
   DELETE_MESSAGE_LOADING,
   DELETE_MESSAGE_SUCCESS,
@@ -59,6 +60,12 @@ export default function (state = initialState, { type, payload }) {
         isLoading: false,
         messages: payload.messages,
       };
+      case GET_SINGLEMESSAGE_SUCCESS:
+        return {
+          ...state,
+          isLoading: false,
+          messages: [payload.messages],
+        };
     case ADD_MESSAGE_SUCCESS:
       return {
         ...state,

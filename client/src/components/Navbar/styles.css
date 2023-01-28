@@ -1,6 +1,6 @@
 nav {
   /* background-color: rgb(78, 68, 21); */
-  padding-left: 30px;
+  /* padding-left: 30px; */
   padding-right: 10px;
   height: 60px;
   margin-bottom: 50px;
@@ -18,7 +18,7 @@ nav {
 
 .logo {
   display: inline-block;
-  color: white;
+  color: black;
   margin: 0;
   font-size: 2rem;
   white-space: nowrap;
@@ -41,13 +41,14 @@ nav {
   display: inline-block;
   padding: 10px 20px;
   text-decoration: none;
-  color: white;
+  color: black;
   white-space: nowrap;
 }
-
+/* 
 .nav-item:hover {
   background-color: var(--main);
-}
+  color: var(--bg)
+} */
 
 .nav-item:active {
   background-color: var(--main);

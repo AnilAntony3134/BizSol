@@ -42,7 +42,7 @@ router.put('/:id', [requireJwtAuth, upload.single('avatar')], async (req, res, n
       return res.status(400).json({ message: 'You do not have privileges to edit this user.' });
 
     //validate name, username and password
-    const { error } = validateUser(req.body);
+    // const { error } = validateUser(req.body);
     if (error) return res.status(400).json({ message: error.details[0].message });
 
     let avatarPath = null;
@@ -61,11 +61,13 @@ router.put('/:id', [requireJwtAuth, upload.single('avatar')], async (req, res, n
       return res.status(400).json({ message: 'Username already taken.' });
     }
 
-    const updatedUser = { avatar: avatarPath, name: req.body.name, username: req.body.username, password };
+    const updatedUser = { avatar: avatarPath, name: req.body.name, username: req.body.username, password, preferences: req.body.preferences ? req.body.preferences : [], additionalInfo: req.body.additionalInfo, status: req.body.status || '', slots: req.body.slots};
+    console.log('got triggered')
+    console.log('updateduser',updatedUser)
     // remove '', null, undefined
     Object.keys(updatedUser).forEach((k) => !updatedUser[k] && updatedUser[k] !== undefined && delete updatedUser[k]);
     // console.log(req.body, updatedUser);
-    const user = await User.findByIdAndUpdate(tempUser.id, { $set: updatedUser }, { new: true });
+    // const user = await User.findByIdAndUpdate(tempUser.id, { $set: updatedUser }, { new: true });
 
     res.status(200).json({ user });
   } catch (err) {
@@ -73,13 +75,39 @@ router.put('/:id', [requireJwtAuth, upload.single('avatar')], async (req, res, n
   }
 });
 
+// router.put('/update', async (req, res) => {
+//   console.log(res.body,'third step')
+//   try {
+//     const tempUser = await User.findById(req.params.id);
+//     if (!tempUser) return res.status(404).json({ message: 'no such user found' });
+//     if (tempUser.id !== req.user.id || req.user.role === 'ADMIN') return res.status(400).json({ message: 'You do not have privileges to edit this user.' });
+
+//     const user = await User.findByIdAndUpdate(
+//       req.params.id,
+//       {
+//         preferences: req.body.preferences ? req.body.preferences : [],
+//         additionalInfo: req.body.additionalInfo,
+//       },
+//       { new: true },
+//     );
+//   console.log(res.body,'fourth step')
+//     if (!user) return res.status(404).json({ message: 'No user found.' });
+//     res.status(200).json({ user });
+//   } catch (err) {
+//     res.status(500).json({ message: 'Something went wrong.' });
+//   }
+// })
+
 router.get('/reseed', async (req, res) => {
   await seedDb();
   res.json({ message: 'Database reseeded successfully.' });
 });
 
 router.get('/me', requireJwtAuth, (req, res) => {
+  console.log('request reached here xxxxxx')
+  console.log(req.user.toJSON());
   const me = req.user.toJSON();
+  console.log(me);
   res.json({ me });
 });
 

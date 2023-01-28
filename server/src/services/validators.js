@@ -20,5 +20,7 @@ export const registerSchema = Joi.object().keys({
     flag: Joi.boolean(),
     arg: Joi.string(),
     value: Joi.string(),
-  })
+  }),
+  role: Joi.string(),
+  description: Joi.string()
 });

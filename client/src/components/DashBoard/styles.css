@@ -1,0 +1,28 @@
+.home-page .reseed-btn {
+    width: 80%;
+  }
+  
+  .home-page .name {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .home-page{
+    width: 100%;
+  }
+  
+  .card_intro_wrapper{
+    padding: 20px;
+    margin-right: 20px;
+    margin-top: 40px;
+    background-color: rgb(0, 132, 209);
+    border-radius: 10px;
+    width: 33%;
+    cursor: pointer;
+    transition: 0.5s;
+  }
+  
+  .card_intro_wrapper:hover{
+    transform: scale(1.02);
+  } 
+  

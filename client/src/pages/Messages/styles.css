@@ -1,0 +1,21 @@
+.tabs-messageOne-ind{
+    padding: 10px;
+    cursor: pointer;
+    transition: 0.5s;
+    border-radius: 10px;
+    margin: 0 10px;
+    height: min-content;
+}
+
+.tabs-messageOne-ind:hover{
+    border: 1px solid var(--main);
+}
+
+.active-one{
+    background-color: var(--main);
+    color: var(--bg);
+}
+
+.profile{
+    width: auto;
+}

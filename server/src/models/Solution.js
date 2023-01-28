@@ -4,6 +4,10 @@ const { Schema } = mongoose;
 
 const solutionSchema = new Schema(
   {
+    title: {
+      type: String,
+      required: true,
+    },
     solution: {
       type: String,
       required: true,
@@ -14,29 +18,51 @@ const solutionSchema = new Schema(
     },
     organisation: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    shortlisted: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    selected: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    price: {
+      type: Number,
+      required: false,
+      default: 0
+    }
   },
   { timestamps: true },
 )
 
 solutionSchema.methods.toJSON = function () {
-  console.log(this)
   return {
     id: this._id,
+    title: this.title,
     solution: this.solution,
     message: this.message.toJSON(),
     organisation: this.organisation.toJSON(),
     createdAt: this.createdAt,
     updatedAt: this.updatedAt,
+    shortlisted: this.shortlisted,
+    selected: this.selected,
+    price: this.price,
     user: this.user.toJSON(),
   };
 };
 
 export const validateMessage = (message) => {
   const schema = {
-    solution: Joi.string().min(5).max(800).required(),
+    title: Joi.string().min(5).required(),
+    solution: Joi.string().min(5).required(),
     message: Joi.string().required(),
     organisation: Joi.string().required(),
     user: Joi.string().required(),
+    shortlisted: Joi.boolean(),
+    selected: Joi.boolean(),
+    price: Joi.number(),
   };
   return Joi.validate(message, schema);
 };

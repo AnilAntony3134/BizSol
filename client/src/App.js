@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -6,6 +6,7 @@ import Cookies from 'js-cookie';
 
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
+import MessageOne from './pages/Messages/MessageOne';
 import Home from './pages/Home/Home';
 import Profile from './pages/Profile/Profile';
 import Users from './pages/Users/Users';
@@ -44,6 +45,7 @@ const App = ({ logInUserWithOauth, auth, loadMe }) => {
         <Switch>
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
+          <Route path="/message/:id" component={MessageOne} />
           <Route path="/users" component={Users} />
           <Route path="/notfound" component={NotFound} />
           <Route path="/admin" component={Admin} />

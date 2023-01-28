@@ -11,7 +11,7 @@ const Solutionlist = ({ getSolutions, solution: { solutions, isLoading, error },
   useEffect(() => {
     getSolutions();
   }, []);
-  if (!me.organisation?.flag) solutions = solutions.filter(e => e.user.id === me.id)
+  if (!me.organisation?.flag) solutions = solutions.filter(e => e.user.id === me.id && e.message === orgSolution)
   else if(orgSolution) solutions = solutions.filter(e => e.message === orgSolution)
   const [itemoffset, setItemoffset] = useState(0);
   const itemsperpage = 6;
@@ -25,7 +25,6 @@ const Solutionlist = ({ getSolutions, solution: { solutions, isLoading, error },
   }
   return (
     <div className="message-list">
-      <h2>Solutions:</h2>
       {error && <div className="error-center">{error}</div>}
       <div className="list">
         {isLoading ? (
@@ -50,6 +49,12 @@ const Solutionlist = ({ getSolutions, solution: { solutions, isLoading, error },
             }
           </>
         )}
+
+        {
+          solutions.length === 0 && (
+            <h1>Hey there you have not uploaded any answers for this questions</h1>
+          )
+        }
       </div>
     </div>
   );

@@ -26,6 +26,7 @@ const Register = ({ auth, register: { isLoading, error }, history, registerUserW
     validationSchema: registerSchema,
     onSubmit: (values) => {
       if(isOrg) {
+        values.role = 'ORG';
         values.organisation = {};
         values.organisation.name = values.name;
         values.organisation.flag = true;

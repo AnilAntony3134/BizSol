@@ -1,0 +1,4 @@
+.defaultCard{
+    background-color: var(--main) !important;
+    color: 'white'; 
+}

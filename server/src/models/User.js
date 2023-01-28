@@ -12,11 +12,11 @@ const { Schema } = mongoose;
 const organisationSchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: false
   },
   flag: {
     type: Boolean,
-    required: true
+    required: false
   },
   description: {
     type: Boolean,
@@ -74,7 +74,21 @@ const userSchema = new Schema(
       sparse: true,
     },
     messages: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Message' }],
-    solutions: [{type: mongoose.Schema.Types.ObjectId, ref: 'Solution'}]
+    solutions: [{type: mongoose.Schema.Types.ObjectId, ref: 'Solution'}],
+    additionalInfo: {
+      type: [Object],
+    },
+    preferences: {
+      type: [String],
+    },
+    status: {
+      type: String,
+      default: 'newUser',
+    },
+    slots: {
+      type: Number,
+      default: 5,
+    },     
   },
   { timestamps: true },
 );
@@ -100,7 +114,11 @@ userSchema.methods.toJSON = function () {
     role: this.role,
     createdAt: this.createdAt,
     updatedAt: this.updatedAt,
-    organisation: this.organisation
+    organisation: this.organisation,
+    preferences: this.preferences,
+    additionalInfo: this.additionalInfo,
+    status: this.status,
+    slots: this.slots
   };
 };
 
@@ -165,6 +183,9 @@ export const validateUser = (user) => {
       .regex(/^[a-zA-Z0-9_]+$/)
       .required(),
     password: Joi.string().min(6).max(20).allow('').allow(null),
+    preferences: Joi.any(),
+    additionalInfo: Joi.any(),
+    slots: Joi.any(),
   };
 
   return Joi.validate(user, schema);
