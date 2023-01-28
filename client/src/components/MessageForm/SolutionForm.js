@@ -6,8 +6,10 @@ import { addSolution } from '../../store/actions/solutionActions';
 import { solutionFormSchema } from './validation';
 import './styles.css';
 import { Button,  Input, Spacer, Textarea } from '@nextui-org/react';
+import toast, { Toaster } from 'react-hot-toast';
 
 const SolutionForm = ({ addMessage, addSolution, message: { messages }, setAddMessage, isSolution, messageId, auth: { me }, setTab }) => {
+  const notify = () => toast.success('Successfully Posted Your Answer');
   const formik = useFormik({
     initialValues: {
       title: '',
@@ -16,6 +18,7 @@ const SolutionForm = ({ addMessage, addSolution, message: { messages }, setAddMe
     validationSchema: solutionFormSchema,
     onSubmit: (values, { resetForm }) => {
       addSolution({title: values.title, solution: values.text, message: messageId, organisation: messages.find(e => e.id === messageId)?.user?.id, user: me.id });
+      notify()
       resetForm();
       setAddMessage(false);
       setTab(1);
@@ -29,6 +32,7 @@ const SolutionForm = ({ addMessage, addSolution, message: { messages }, setAddMe
   return (
     <div className="solution-form">
       <h2>Share your solution</h2>
+      <Toaster/>
       <form onSubmit={formik.handleSubmit}>
         <>
           <Spacer y={2} />

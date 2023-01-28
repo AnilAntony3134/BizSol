@@ -114,7 +114,6 @@ export const editSolution = (id, formData) => async (dispatch, getState) => {
       type: EDIT_SOLUTION_SUCCESS,
       payload: { message: response.data.message },
     });
-    toast.success('Successfully created!');
   } catch (err) {
     dispatch({
       type: EDIT_SOLUTION_FAIL,

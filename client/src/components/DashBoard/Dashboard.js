@@ -10,6 +10,7 @@ import PreferencesModal from '../Modals/PreferencesModal';
 import AdditionalInfo from '../Modals/AdditionalInfo';
 import PriceCard from '../PriceCard/PriceCard';
 import { loadMe } from '../../store/actions/authActions';
+import WinnerModal from '../Modal/WinnerModal';
 
 const Dashboard = ({ auth }) => {
     const [isaddMessage, setIsAddMessage] = useState(false);
@@ -35,7 +36,7 @@ const Dashboard = ({ auth }) => {
                     <h1>Dash<span style={{ color: '#4040d4' }}>Board</span></h1>
                     {
                         auth.me.organisation?.flag && (
-                            <Button className='bg-indigo-700 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' style={{ width: '200px', backgroundColor: '#4040d4' }} onClick={() => auth.me.slots !== 1 ? setIsAddMessage(true) : setShowPrice(true)}>{isaddMessage ? 'Hide Write Message' : 'New Issue'}</Button>
+                            <Button className='bg-indigo-700 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' style={{ width: '200px', backgroundColor: '#4040d4' }} onClick={() => auth.me.slots === 1 ? setIsAddMessage(true) : setShowPrice(true)}>{isaddMessage ? 'Hide Write Message' : 'New Issue'}</Button>
                         )
                     }
                 </div>
@@ -109,7 +110,8 @@ const Dashboard = ({ auth }) => {
                 onClose={() => setShowPrice(false)}
                 width="60vw"
             >
-                <PriceCard />
+                {/* <PriceCard /> */}
+                <WinnerModal />
             </Modal>
             <div style={{ display: 'flex', width: '100%', color: 'var(--bg)', justifyContent: 'space-between' }}>
                 <div className='card_intro_wrapper' style={{ backgroundColor: 'rgb(83, 1, 190)' }}>

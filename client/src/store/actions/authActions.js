@@ -23,7 +23,6 @@ export const loadMe = () => async (dispatch, getState) => {
   try {
     const options = attachTokenToHeaders(getState);
     const response = await axios.get('http://localhost:80/api/users/me', options);
-    toast.success("Welcome to the bisol!");
     dispatch({
       type: ME_SUCCESS,
       payload: { me: response.data.me },

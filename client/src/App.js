@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import Cookies from 'js-cookie';
-
+import { Toaster } from 'react-hot-toast';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
 import MessageOne from './pages/Messages/MessageOne';
@@ -41,6 +41,7 @@ const App = ({ logInUserWithOauth, auth, loadMe }) => {
 
   return (
     <>
+    <Toaster/>
       {auth.appLoaded ? (
         <Switch>
           <Route path="/login" component={Login} />

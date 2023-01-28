@@ -11,6 +11,7 @@ import { loginUserWithEmail } from '../../store/actions/authActions';
 import { FACEBOOK_AUTH_LINK, GOOGLE_AUTH_LINK } from '../../constants';
 import { loginSchema } from './validation';
 import './styles.css';
+import { toast } from 'react-hot-toast';
 
 const Login = ({ auth, history, loginUserWithEmail }) => {
   const formik = useFormik({
@@ -21,6 +22,7 @@ const Login = ({ auth, history, loginUserWithEmail }) => {
     validationSchema: loginSchema,
     onSubmit: (values) => {
       loginUserWithEmail(values, history);
+      toast.success("Welcome back")
     },
   });
 
@@ -28,6 +30,7 @@ const Login = ({ auth, history, loginUserWithEmail }) => {
 
   return (
     <div className="login">
+      
       <div className="container-login">
         <img width="700px" src='/assets/login.png' />
       </div>

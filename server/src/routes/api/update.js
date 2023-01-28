@@ -13,7 +13,8 @@ router.put('/:id', requireJwtAuth, async (req, res, next) => {
             {
                 preferences: req.body.preferences, 
                 slots: req.body.slots,
-                additionalInfo: req.body.additionalInfo
+                additionalInfo: req.body.additionalInfo,
+                winnerSolutions: req.body.winnerSolutions
             },
             { new: true },
         );

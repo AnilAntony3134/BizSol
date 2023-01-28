@@ -36,11 +36,15 @@ const Navbar = ({ auth, logOutUser, history }) => {
               </li>
             )}
             <li className="flex-1" />
-            <div style={{display:'flex',justifyContent:'center',alignItems: 'center', fontSize: '1.5rem'}}>
-              {auth.me.slots}
-              <AiFillFire style={{color: 'red', fontSize: '2.1rem'}}/>
-              <Spacer x={1}/>
-            </div>
+            {
+              auth.me.organisation.flag && (
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '1.5rem' }}>
+                  {auth.me.slots}
+                  <AiFillFire style={{ color: 'red', fontSize: '2.1rem' }} />
+                  <Spacer x={1} />
+                </div>
+              )
+            }
             <Link to={`/${auth.me.username}`}>
               <Avatar
                 size="lg"
@@ -52,7 +56,7 @@ const Navbar = ({ auth, logOutUser, history }) => {
               />
             </Link>
             <li className="nav-item" onClick={onLogOut}>
-              <a href="#" style={{color: 'var(--bg)'}}>Log out</a>
+              <a href="#" style={{ color: 'var(--bg)' }}>Log out</a>
             </li>
           </>
         ) : (
@@ -63,7 +67,7 @@ const Navbar = ({ auth, logOutUser, history }) => {
               <Link to="/login">Login</Link>
             </li>
             <li className="nav-item">
-              <Link to="/register" style={{color: 'var(--bg)'}}>SignUp</Link>
+              <Link to="/register" style={{ color: 'var(--bg)' }}>SignUp</Link>
             </li>
           </>
         )}

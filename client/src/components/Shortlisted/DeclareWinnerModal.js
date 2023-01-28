@@ -18,7 +18,7 @@ const DeclareWinnerModal = ({ solutions, themessage, message: {messages}, editSo
             const messageOne = messages[0];
             console.log(messageOne, 'messageOne')
             editMessage(messageOne.id, { title: messageOne.title, text: messageOne.text, incentive: messageOne.incentive, category: messageOne.category, public: messageOne.public, difficulty: messageOne.difficulty, winnerDeclared: true });
-            updateUserPreferences(me.id, {name: me.name, username: me.username, avatarpath: me.avatarpath, preferences: me.preferences, additionalInfo: me.additionalInfo, status: 'winner'});
+            updateUserPreferences(e.user.id, {status: 'winner', winnerSolutions: [...(me.winnerSolutions || []), e.id]});
             closeHandler();
         })
     }

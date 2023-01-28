@@ -12,6 +12,7 @@ import { useFormik } from 'formik';
 import { registerUserWithEmail } from '../../store/actions/registerActions';
 import { registerSchema } from './validation';
 import './styles.css';
+import { toast } from 'react-hot-toast';
 
 const Register = ({ auth, register: { isLoading, error }, history, registerUserWithEmail }) => {
   const [isOrg, setIsOrg] = useState(true);
@@ -39,6 +40,7 @@ const Register = ({ auth, register: { isLoading, error }, history, registerUserW
         delete values.description;
       }
       registerUserWithEmail(values, history);
+      toast.success("Welcome to BizSol")
     },
   });
 

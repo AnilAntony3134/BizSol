@@ -89,7 +89,8 @@ const userSchema = new Schema(
     slots: {
       type: Number,
       default: 5,
-    },     
+    },
+    winnerSolutions: [{type: mongoose.Schema.Types.ObjectId, ref: 'Solution'}],
   },
   { timestamps: true },
 );
@@ -119,7 +120,9 @@ userSchema.methods.toJSON = function () {
     preferences: this.preferences,
     additionalInfo: this.additionalInfo,
     status: this.status,
-    slots: this.slots
+    slots: this.slots,
+    // winnerSolutions: [this.winnerSolutions.toJSON()],
+
   };
 };
 
