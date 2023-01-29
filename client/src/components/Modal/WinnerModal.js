@@ -38,7 +38,7 @@ const WinnerModal = ({auth : {me}}) => (
         zIndex: 1,
       }}
     >
-      <Row>
+      {/* <Row>
         <Col>
           <Row>
             <Col span={3}>
@@ -79,7 +79,7 @@ const WinnerModal = ({auth : {me}}) => (
             </Button>
           </Row>
         </Col>
-      </Row>
+      </Row> */}
     </Card.Footer>
   </Card>
 );

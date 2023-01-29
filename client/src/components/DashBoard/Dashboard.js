@@ -22,6 +22,7 @@ const Dashboard = ({ auth }) => {
     const closeHandler = () => setIsAddMessage(false);
     const closePreferences = () => setaAdpref({...addpref, form1: false});
     const closeAdditionalInfo = () => setaAdpref({...addpref, form2: false});
+    const [showWinnerModa, setshowWinnerModa] = useState(false);
 
     useEffect(() => {
         if (!auth.appLoaded && !auth.isLoading && auth.token && !auth.isAuthenticated) {
@@ -29,11 +30,15 @@ const Dashboard = ({ auth }) => {
         }
       }, [addpref]);
 
-    //   useEffect(() => {
-    //     if (!auth.appLoaded && !auth.isLoading && auth.token && !auth.isAuthenticated) {
-    //       loadMe();
-    //     }
-    //   }, [addpref]);
+      useEffect(() => {
+        if (auth.me.status === 'winner') {
+            setTimeout(() => {
+                setshowWinnerModa(true);
+            }, 3000);
+        }
+      }, []);
+
+      console.log(showWinnerModa);
 
     return (
         <>
@@ -42,7 +47,7 @@ const Dashboard = ({ auth }) => {
                     <h1>Dash<span style={{ color: '#4040d4' }}>Board</span></h1>
                     {
                         auth.me.organisation?.flag && (
-                            <Button className='bg-indigo-700 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' style={{ width: '200px', backgroundColor: '#4040d4' }} onClick={() => auth.me.slots === 1 ? setIsAddMessage(true) : setShowPrice(true)}>{isaddMessage ? 'Hide Write Message' : 'New Issue'}</Button>
+                            <Button className='bg-indigo-700 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' style={{ width: '200px', backgroundColor: '#4040d4' }} onClick={() => auth.me.slots !== 0 ? setIsAddMessage(true) : setShowPrice(true)}>{isaddMessage ? 'Hide Write Message' : 'New Issue'}</Button>
                         )
                     }
                 </div>
@@ -82,6 +87,15 @@ const Dashboard = ({ auth }) => {
 
                 )
             }
+                    <Modal
+                closeButton
+                aria-labelledby="modal-title"
+                open={showWinnerModa}
+                onClose={() => setshowWinnerModa(false)}
+                width="40vw"
+            >
+                <WinnerModal />
+            </Modal>
             <Modal
                 closeButton
                 aria-labelledby="modal-title"
@@ -116,8 +130,7 @@ const Dashboard = ({ auth }) => {
                 onClose={() => setShowPrice(false)}
                 width="60vw"
             >
-                {/* <PriceCard /> */}
-                <WinnerModal />
+                <PriceCard />
             </Modal>
             <div style={{ display: 'flex', width: '100%', color: 'var(--bg)', justifyContent: 'space-between' }}>
                 <div className='card_intro_wrapper' style={{ backgroundColor: 'rgb(83, 1, 190)' }}>
