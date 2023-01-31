@@ -16,6 +16,7 @@
   "author": "Nemanja Mitic (https://github.com/nemanjam)",
   "license": "MIT",
   "devDependencies": {
+    "@babel/cli": "^7.20.7",
     "@babel/core": "^7.20.12",
     "@babel/node": "^7.20.7"
   },

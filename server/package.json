@@ -20,8 +20,6 @@
   "author": "Nemanja Mitic (https://github.com/nemanjam)",
   "license": "ISC",
   "dependencies": {
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.1.6",
     "@babel/node": "^7.0.0",
     "@babel/plugin-proposal-optional-chaining": "^7.8.3",
     "@babel/preset-env": "^7.1.6",
@@ -45,6 +43,8 @@
     "passport-local": "^1.0.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.20.7",
+    "@babel/core": "^7.20.12",
     "babel-preset-env": "^1.7.0",
     "nodemon": "^2.0.2"
   }
