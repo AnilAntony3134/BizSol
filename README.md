@@ -15,4 +15,4 @@
 ![image](https://user-images.githubusercontent.com/92921196/216771095-5b5d689f-4f95-4625-ae6c-aa7619dcf67e.png)
 
 
-## this is an apllication which 
+## More details can be seen on the attached video
